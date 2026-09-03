@@ -10,6 +10,7 @@ void main(){
   print(stuff[0]['time']);
   print(stuff[0]['temperature']);
   print(averagetemp(stuff));
+  print(highest(stuff));
 }
 
 double averagetemp(List<dynamic> l){
@@ -29,4 +30,21 @@ double averagetemp(List<dynamic> l){
 
 return av;
 }
-//double highest()
+num highest(List<dynamic> l){
+  num h = 0;
+  int it = 0;
+  if(l.isEmpty){
+    throw ArgumentError('List is empty, no variables to look through');
+  }
+  for(int i =0; i< l.length; i++){
+    if(l[i]['temperature'] > h){
+      h = l[i]['temperature'];
+    }
+    it++;
+  }
+
+  print(it);
+
+
+  return h;
+}
