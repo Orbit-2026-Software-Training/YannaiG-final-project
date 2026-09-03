@@ -11,6 +11,7 @@ void main(){
   print(stuff[0]['temperature']);
   print(averagetemp(stuff));
   print(highest(stuff));
+  print(lowest(stuff));
 }
 
 double averagetemp(List<dynamic> l){
@@ -47,4 +48,20 @@ num highest(List<dynamic> l){
 
 
   return h;
+}
+num lowest(List<dynamic> l){
+  int it = 0;
+  if(l.isEmpty){
+    throw ArgumentError('List is empty');
+  }
+  num lo = l[0]['temperature'];
+
+  for(int i = 0; i< l.length; i++){
+    if(lo > l[i]['temperature']){
+      lo = l[i]['temperature'];
+    }
+    it++;
+  }
+print(it);
+  return lo;
 }
