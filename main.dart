@@ -13,58 +13,50 @@ void main(){
   print("The lowest temp is: ${lowest(stuff)}");
 }
 
-double averagetemp(List<dynamic> l){
-  double av = 0;
+double averagetemp(List<dynamic> list){
+  double average= 0;
   num sum = 0;
-  int it =0;
-  if(l.isEmpty){
+  
+  if(list.isEmpty){
     throw ArgumentError('List is empty! Please correct and try again.');
   }
-  for(int i = 0; i < l.length; i++){
-    sum += l[i]['temperature'];
-    it++;
+  for(int i = 0; i < list.length; i++){
+    sum += list[i]['temperature'];
   }
-  av = (sum / l.length);
-  print(it);
+  average = (sum / list.length);
 
 
-return av;
+return average;
 }
 
-
-num highest(List<dynamic> l){
-  num h = 0;
-  int it = 0;
-  if(l.isEmpty){
+num highest(List<dynamic> list){
+  num highestnum = 0;
+  
+  if(list.isEmpty){
     throw ArgumentError('List is empty, no variables to look through');
   }
-  for(int i =0; i< l.length; i++){
-    if(l[i]['temperature'] > h){
-      h = l[i]['temperature'];
+  for(int i =0; i< list.length; i++){
+    if(l[i]['temperature'] > highestnum){
+      highestnum = list[i]['temperature'];
     }
-    it++;
   }
 
-  print(it);
 
-
-  return h;
+  return highestnum;
 }
 
+num lowest(List<dynamic> list){
 
-num lowest(List<dynamic> l){
-  int it = 0;
-  if(l.isEmpty){
+  if(list.isEmpty){
     throw ArgumentError('List is empty');
   }
-  num lo = l[0]['temperature'];
+  num lowestnum = list[0]['temperature'];
 
-  for(int i = 0; i< l.length; i++){
-    if(lo > l[i]['temperature']){
-      lo = l[i]['temperature'];
+  for(int i = 0; i< list.length; i++){
+    if(lowestnum > list[i]['temperature']){
+      lowestnum = list[i]['temperature'];
     }
-    it++;
   }
-print(it);
-  return lo;
+
+  return lowestnum;
 }
