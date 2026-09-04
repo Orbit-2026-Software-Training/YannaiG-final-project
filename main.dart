@@ -11,6 +11,7 @@ void main(){
   print("The average temp is: ${averagetemp(stuff)}");
   print("The highest temp is: ${highest(stuff)}");
   print("The lowest temp is: ${lowest(stuff)}");
+  print("The temperatures were above 25 degrees ${mosteffective(stuff)} times");
 }
 
 double averagetemp(List<dynamic> list){
@@ -36,7 +37,7 @@ num highest(List<dynamic> list){
     throw ArgumentError('List is empty, no variables to look through');
   }
   for(int i =0; i< list.length; i++){
-    if(l[i]['temperature'] > highestnum){
+    if(list[i]['temperature'] > highestnum){
       highestnum = list[i]['temperature'];
     }
   }
@@ -59,4 +60,18 @@ num lowest(List<dynamic> list){
   }
 
   return lowestnum;
+}
+
+num mosteffective(List<dynamic> list){
+num counter = 0;
+  if(list.isEmpty){
+    throw ArgumentError('List is empty, no data to check');
+  }
+  for(int i = 0; i< list.length; i++){
+    if(list[i]['temperature'] > 25){
+      counter++;
+    }
+  }
+
+return counter;
 }
