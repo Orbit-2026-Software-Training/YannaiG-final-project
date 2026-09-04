@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+
+const optimalMotorTemp = 25;
 void main(){
   File file = File('data.json');
   String rawdata = file.readAsStringSync();
@@ -63,13 +65,12 @@ num lowest(List<dynamic> list){
 }
 
 num mosteffective(List<dynamic> list){
-const OptimalMotorTemp = 25;
 num counter = 0;
   if(list.isEmpty){
     throw ArgumentError('List is empty, no data to check');
   }
   for(int i = 0; i< list.length; i++){
-    if(list[i]['temperature'] > OptimalMotorTemp){
+    if(list[i]['temperature'] > optimalMotorTemp){
       counter++;
     }
   }
