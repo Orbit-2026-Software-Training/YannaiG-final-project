@@ -11,7 +11,7 @@ void main(){
   print("The average temp is: ${averagetemp(stuff)}");
   print("The highest temp is: ${highest(stuff)}");
   print("The lowest temp is: ${lowest(stuff)}");
-  print("The temperatures were above 25 degrees ${mosteffective(stuff)} times");
+  print("The motor worked on the optimal temp  ${mosteffective(stuff)} times.");
 }
 
 double averagetemp(List<dynamic> list){
@@ -63,12 +63,13 @@ num lowest(List<dynamic> list){
 }
 
 num mosteffective(List<dynamic> list){
+const OptimalMotorTemp = 25;
 num counter = 0;
   if(list.isEmpty){
     throw ArgumentError('List is empty, no data to check');
   }
   for(int i = 0; i< list.length; i++){
-    if(list[i]['temperature'] > 25){
+    if(list[i]['temperature'] > OptimalMotorTemp){
       counter++;
     }
   }
