@@ -7,11 +7,10 @@ void main(){
 
 
   List<dynamic> stuff = jsonDecode(rawdata);
-  print(stuff[0]['time']);
-  print(stuff[0]['temperature']);
-  print(averagetemp(stuff));
-  print(highest(stuff));
-  print(lowest(stuff));
+ 
+  print("The average temp is: ${averagetemp(stuff)}");
+  print("The highest temp is: ${highest(stuff)}");
+  print("The lowest temp is: ${lowest(stuff)}");
 }
 
 double averagetemp(List<dynamic> l){
@@ -31,6 +30,8 @@ double averagetemp(List<dynamic> l){
 
 return av;
 }
+
+
 num highest(List<dynamic> l){
   num h = 0;
   int it = 0;
@@ -49,6 +50,8 @@ num highest(List<dynamic> l){
 
   return h;
 }
+
+
 num lowest(List<dynamic> l){
   int it = 0;
   if(l.isEmpty){
