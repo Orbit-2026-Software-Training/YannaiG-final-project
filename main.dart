@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import 'dart:io';
 
+import 'dart:math';
 const optimalMotorTemp = 25; // not used in current code version
 void main() async {
   final url = Uri.parse(
@@ -38,12 +39,13 @@ void main() async {
   //print("The highest temp is: ${highest(stuff)}");
   //print("The lowest temp is: ${lowest(stuff)}");
   //print("The motor worked on the optimal temp  ${mosteffective(stuff)} times.");
+
 }
 
 double averagej(List<dynamic> list) {
   double average = 0;
   num sum = 0;
-
+  String possible  = list[0];
   if (list.isEmpty) {
     throw ArgumentError('List is empty! Please correct and try again.');
   }
@@ -51,6 +53,12 @@ double averagej(List<dynamic> list) {
     sum += list[i].length;
   }
   average = (sum / list.length);
+  for(int i = 0; i< list.length; i++){
+    if((list[i].length - average).abs() < (possible.length - average).abs()){
+      possible = list[i];
+    }
+  }
+  print("The joke with the closest number of letters as the average is $possible");
 
   return average;
 }
