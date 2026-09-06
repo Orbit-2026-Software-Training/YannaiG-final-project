@@ -57,6 +57,9 @@ double averagej(List<dynamic> list) {
     if((list[i].length - average).abs() < (possible.length - average).abs()){
       possible = list[i];
     }
+    else if(list[i].length == average){
+      possible = list[i];
+    }
   }
   print("The joke with the closest number of letters as the average is $possible");
 
