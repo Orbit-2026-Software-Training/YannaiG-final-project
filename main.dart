@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 
 import 'dart:io';
 
-import 'dart:math';
-const optimalMotorTemp = 25; // not used in current code version
+
+
 void main() async {
   final url = Uri.parse(
     'https://v2.jokeapi.dev/joke/Programming?type=single&amount=10',
@@ -30,15 +30,7 @@ void main() async {
   print(
     "The average number of letters in all the jokes is ${averagej(singularJokes)}",
   );
-  // File file = File('data.json');                       all made for older versions.
-  //String rawdata = file.readAsStringSync();
 
-  //List<dynamic> stuff = jsonDecode(rawdata);
-
-  //print("The average temp is: ${averagej(stuff)}");
-  //print("The highest temp is: ${highest(stuff)}");
-  //print("The lowest temp is: ${lowest(stuff)}");
-  //print("The motor worked on the optimal temp  ${mosteffective(stuff)} times.");
 
 }
 
@@ -98,18 +90,3 @@ num lowest(List<dynamic> list) {
   print(list[index]);
   return lowestnum;
 }
-/*
-num mosteffective(List<dynamic> list) {
-  num counter = 0;
-  if (list.isEmpty) {
-    throw ArgumentError('List is empty, no data to check');
-  }
-  for (int i = 0; i < list.length; i++) {
-    if (list[i]['temperature'].length > optimalMotorTemp) {
-      counter++;
-    }
-  }
-
-  return counter;
-}
-*/
