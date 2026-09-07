@@ -3,18 +3,100 @@ import 'dart:convert';
 import 'dart:io';
 
 
-
 void main() {
-  
-  File jsonfile = File('data.json');
-  String rawdata = jsonfile.readAsStringSync();
+  List<dynamic> testData = getDataFromJsonFile();
+  List<dynamic> jokesData = getJokesFromJson();
+  num firstmaximum = getMax(testData);
+  num firstminimum = getMin(testData);
+  num firstaverage = getAverage(testData);
+  num secmaximum = getMax(jokesData);
+  num secminimum = getMin(jokesData);
+  num secaverage = getAverage(jokesData);
+  List<num> percentages = [
+    getPercent(firstaverage, firstminimum),
+    getPercent(firstaverage, firstmaximum),
+    getPercent(secaverage, secminimum),
+    getPercent(secaverage, secmaximum),
+  ];
+  num maxvalue = percentages[0];
+  List<String> names = [
+    "minium from original file",
+    "maximum from original file",
+    "minimum from joke file",
+    "maximum from joke file",
+  ];
+  String maxAnchor = "";
+  for (int i = 0; i < percentages.length; i++) {
+    if (maxvalue < percentages[i]) {
+      maxvalue = percentages[i];
+      maxAnchor = names[i];
+    }
+  }
+  print(
+    "The maximum percentage is: $maxvalue and it comes from the $maxAnchor",
+  );
+}
 
-  List<dynamic> uncheckedData = jsonDecode(rawdata);
-   
-  List <dynamic> temperatures = [];
-  for(int i =0; i< uncheckedData.length; i++){
+List<dynamic> getJokesFromJson() {
+  File file = File('jsonFile.json');
+  Map<String, dynamic> raws = jsonDecode(file.readAsStringSync());
+  List<dynamic> temp = raws['jokes'];
+  List<String> singularJokes = [
+    for (final dynamic joke in temp) joke['joke'] as String,
+  ];
+  List<dynamic> jokevalues = [];
+  for (int i = 0; i < singularJokes.length; i++) {
+    jokevalues.add(singularJokes[i].length);
+  }
+  return jokevalues;
+}
+
+List<dynamic> getDataFromJsonFile() {
+  File jsonfile = File('data.json');
+  String raws = jsonfile.readAsStringSync();
+  List<dynamic> uncheckedData = jsonDecode(raws);
+
+  List<dynamic> temperatures = [];
+  for (int i = 0; i < uncheckedData.length; i++) {
     temperatures.add(uncheckedData[i]['temperature']);
   }
-  temperatures.sort();
-  print("These are the sorted temperatures: $temperatures");
+
+  return temperatures;
+}
+
+num getMax(List<dynamic> list) {
+  num Max = list[0];
+  for (int i = 0; i < list.length; i++) {
+    if (list[i] > Max) {
+      Max = list[i];
+    }
+  }
+
+  return Max;
+}
+
+num getMin(List<dynamic> list) {
+  num Min = list[0];
+  for (int i = 0; i < list.length; i++) {
+    if (list[i] < Min) {
+      Min = list[i];
+    }
+  }
+  return Min;
+}
+
+num getAverage(List<dynamic> list) {
+  num average = list[0];
+  num sum = 0;
+  for (int i = 0; i < list.length; i++) {
+    sum += list[i];
+  }
+  average = sum / list.length;
+
+  return average;
+}
+
+num getPercent(num average, num extremeNumber) {
+  num percent = ((extremeNumber - average).abs() / average) * 100;
+  return percent;
 }
