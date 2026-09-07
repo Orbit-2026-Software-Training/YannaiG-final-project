@@ -1,74 +1,93 @@
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 import 'dart:io';
 
-const optimalMotorTemp = 25;
-void main() {
-  File file = File('data.json');
-  String rawdata = file.readAsStringSync();
 
-  List<dynamic> stuff = jsonDecode(rawdata);
 
-  print("The average temp is: ${averagetemp(stuff)}");
-  print("The highest temp is: ${highest(stuff)}");
-  print("The lowest temp is: ${lowest(stuff)}");
-  print("The motor worked on the optimal temp  ${mosteffective(stuff)} times.");
+void main() async {
+  final dynamic url = Uri.parse(
+    'https://v2.jokeapi.dev/joke/Programming?type=single&amount=10',
+  );
+  final dynamic  response = await http.get(url);
+  File jsonfile = File('jsonFile.json');
+  jsonfile.writeAsStringSync(response.body);
+
+  Map<String, dynamic> raws = jsonDecode(jsonfile.readAsStringSync());
+  List<dynamic> temp = raws['jokes'];
+
+  List<String> singularJokes = [
+    for (final dynamic joke in temp) joke['joke'] as String,
+  ];
+
+  print(
+    "The highest amount of letters in the given jokes is ${highest(singularJokes)} ",
+  );
+  print(
+    "The lowest amount of leters in the given jokes is ${lowest(singularJokes)}",
+  );
+  
+  print(
+    "The average number of letters in all the jokes is ${averagej(singularJokes)}",
+  );
+
+
 }
 
-double averagetemp(List<dynamic> list) {
+(String,double) averagej(List<dynamic> list) {
   double average = 0;
   num sum = 0;
-
+  String possible  = list[0];
   if (list.isEmpty) {
     throw ArgumentError('List is empty! Please correct and try again.');
   }
   for (int i = 0; i < list.length; i++) {
-    sum += list[i]['temperature'];
+    sum += list[i].length;
   }
   average = (sum / list.length);
+  for(int i = 0; i< list.length; i++){
+    if((list[i].length - average).abs() < (possible.length - average).abs()){
+      possible = list[i];
+    }
+    else if(list[i].length == average){
+      possible = list[i];
+    }
+  }
 
-  return average;
+
+  return (possible,average);
 }
 
-num highest(List<dynamic> list) {
+(String,num) highest(List<dynamic> list) {
   num highestnum = 0;
-
+  int index = 0;
   if (list.isEmpty) {
     throw ArgumentError('List is empty, no variables to look through');
   }
   for (int i = 0; i < list.length; i++) {
-    if (list[i]['temperature'] > highestnum) {
-      highestnum = list[i]['temperature'];
+    if (list[i].length > highestnum) {
+      highestnum = list[i].length;
+      index = i;
     }
   }
-
-  return highestnum;
+  
+  return (list[index],highestnum);
 }
 
-num lowest(List<dynamic> list) {
+(String,num) lowest(List<dynamic> list) {
+  int index = 0;
   if (list.isEmpty) {
     throw ArgumentError('List is empty');
   }
-  num lowestnum = list[0]['temperature'];
+  num lowestnum = list[0].length;
 
   for (int i = 0; i < list.length; i++) {
-    if (lowestnum > list[i]['temperature']) {
-      lowestnum = list[i]['temperature'];
+    if (lowestnum > list[i].length) {
+      lowestnum = list[i].length;
+      index = i;
     }
   }
-
-  return lowestnum;
-}
-
-num mosteffective(List<dynamic> list) {
-  num counter = 0;
-  if (list.isEmpty) {
-    throw ArgumentError('List is empty, no data to check');
-  }
-  for (int i = 0; i < list.length; i++) {
-    if (list[i]['temperature'] > optimalMotorTemp) {
-      counter++;
-    }
-  }
-
-  return counter;
+ 
+  return (list[index],lowestnum);
 }

@@ -1,0 +1,11 @@
+name: end_dart_project
+description: the end dart project
+version: 1.0.0
+
+environment: 
+  sdk: '3.13.2'
+
+
+
+dependencies:
+  http: ^1.4.0
