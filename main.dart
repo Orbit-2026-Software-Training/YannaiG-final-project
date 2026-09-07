@@ -27,6 +27,7 @@ void main() async {
   print(
     "The lowest amount of leters in the given jokes is ${lowest(singularJokes)}",
   );
+  
   print(
     "The average number of letters in all the jokes is ${averagej(singularJokes)}",
   );
@@ -34,7 +35,7 @@ void main() async {
 
 }
 
-double averagej(List<dynamic> list) {
+(String,double) averagej(List<dynamic> list) {
   double average = 0;
   num sum = 0;
   String possible  = list[0];
@@ -53,12 +54,12 @@ double averagej(List<dynamic> list) {
       possible = list[i];
     }
   }
-  print("The joke with the closest number of letters as the average is $possible");
 
-  return average;
+
+  return (possible,average);
 }
 
-num highest(List<dynamic> list) {
+(String,num) highest(List<dynamic> list) {
   num highestnum = 0;
   int index = 0;
   if (list.isEmpty) {
@@ -70,11 +71,11 @@ num highest(List<dynamic> list) {
       index = i;
     }
   }
-  print(list[index]);
-  return highestnum;
+  
+  return (list[index],highestnum);
 }
 
-num lowest(List<dynamic> list) {
+(String,num) lowest(List<dynamic> list) {
   int index = 0;
   if (list.isEmpty) {
     throw ArgumentError('List is empty');
@@ -87,6 +88,6 @@ num lowest(List<dynamic> list) {
       index = i;
     }
   }
-  print(list[index]);
-  return lowestnum;
+ 
+  return (list[index],lowestnum);
 }
