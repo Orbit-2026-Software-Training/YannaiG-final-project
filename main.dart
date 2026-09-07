@@ -7,10 +7,10 @@ import 'dart:io';
 
 
 void main() async {
-  final url = Uri.parse(
+  final dynamic url = Uri.parse(
     'https://v2.jokeapi.dev/joke/Programming?type=single&amount=10',
   );
-  final response = await http.get(url);
+  final dynamic  response = await http.get(url);
   File jsonfile = File('jsonFile.json');
   jsonfile.writeAsStringSync(response.body);
 
@@ -18,7 +18,7 @@ void main() async {
   List<dynamic> temp = raws['jokes'];
 
   List<String> singularJokes = [
-    for (final joke in temp) joke['joke'] as String,
+    for (final dynamic joke in temp) joke['joke'] as String,
   ];
 
   print(
