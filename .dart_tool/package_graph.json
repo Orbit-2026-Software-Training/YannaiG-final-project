@@ -7,9 +7,15 @@
       "name": "end_dart_project",
       "version": "1.0.0",
       "dependencies": [
+        "csv",
         "http"
       ],
       "devDependencies": []
+    },
+    {
+      "name": "csv",
+      "version": "7.2.0",
+      "dependencies": []
     },
     {
       "name": "http",
