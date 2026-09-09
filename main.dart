@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'dart:io';
 
-
+import 'package:http/http.dart' as http;
 void main() {
+  getHttp();
   List<dynamic> testData = getDataFromJsonFile();
   List<dynamic> jokesData = getJokesFromJson();
   num firstmaximum = getMax(testData);
@@ -35,6 +36,17 @@ void main() {
   print(
     "The maximum percentage is: $maxvalue and it comes from the $maxAnchor",
   );
+}
+
+
+void getHttp() async{
+    final dynamic url = Uri.parse(
+    'https://v2.jokeapi.dev/joke/Programming?type=single&amount=10',
+  );
+  final dynamic  response = await http.get(url);
+  File jsonfile = File('jsonFile.json');
+  jsonfile.writeAsStringSync(response.body);
+
 }
 
 List<dynamic> getJokesFromJson() {
