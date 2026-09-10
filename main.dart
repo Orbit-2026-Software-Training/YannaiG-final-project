@@ -44,21 +44,22 @@ void main() {
     "The maximum percentage is: $maxvalue and it comes from the $maxAnchor",
   );
   csvfile.writeAsStringSync(csv.encode(logs));
-  print("Logged all actions");
+  
 }
 
 void getHttp() async {
   final dynamic url = Uri.parse(
     'https://v2.jokeapi.dev/joke/Programming?type=single&amount=10',
   );
-  final dynamic response = await http.get(url);
   logs.add([
-    DateTime.now().toIso8601String(),
-    'Http request',
-    'Calling API through HTTP',
+  DateTime.now().toIso8601String(),
+  'Http request',
+  'Calling API through HTTP',
   ]);
+  final dynamic response = await http.get(url);
   File jsonfile = File('jsonFile.json');
   jsonfile.writeAsStringSync(response.body);
+
 }
 
 List<dynamic> getJokesFromJson() {
@@ -77,15 +78,12 @@ List<dynamic> getJokesFromJson() {
     'Json Loading',
     'Loading Joke Json file',
   ]);
-
+  
   return jokevalues;
 }
-
 List<dynamic> getDataFromJsonFile() {
   File jsonfile = File('data.json');
-  String raws = jsonfile.readAsStringSync();
-  List<dynamic> uncheckedData = jsonDecode(raws);
-
+  List<dynamic> uncheckedData = jsonDecode(jsonfile.readAsStringSync());
   List<dynamic> temperatures = [];
   for (int i = 0; i < uncheckedData.length; i++) {
     temperatures.add(uncheckedData[i]['temperature']);
