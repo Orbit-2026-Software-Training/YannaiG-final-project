@@ -1,0 +1,8 @@
+Timestamp,Stage,Message
+2026-09-10T16:48:10.347679,Http request,Calling API through HTTP
+2026-09-10T16:48:10.405563,Json Loading,Loading Temperatures Json file
+2026-09-10T16:48:10.408453,Json Loading,Loading Joke Json file
+2026-09-10T16:48:10.410068,Calculating,Calculating average percentage value
+2026-09-10T16:48:10.410098,Calculating,Calculating average percentage value
+2026-09-10T16:48:10.410205,Calculating,Calculating average percentage value
+2026-09-10T16:48:10.410221,Calculating,Calculating average percentage value

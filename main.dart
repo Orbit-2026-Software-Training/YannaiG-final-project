@@ -2,8 +2,16 @@ import 'dart:convert';
 
 import 'dart:io';
 
+import 'package:http/http.dart' as http;
 
+import 'package:csv/csv.dart';
+
+File csvfile = File('logs.csv');
+List<List<dynamic>> logs = [
+  ['Timestamp', 'Stage', 'Message'],
+];
 void main() {
+  getHttp();
   List<dynamic> testData = getDataFromJsonFile();
   List<dynamic> jokesData = getJokesFromJson();
   num firstmaximum = getMax(testData);
@@ -35,6 +43,23 @@ void main() {
   print(
     "The maximum percentage is: $maxvalue and it comes from the $maxAnchor",
   );
+  csvfile.writeAsStringSync(csv.encode(logs));
+  
+}
+
+void getHttp() async {
+  final dynamic url = Uri.parse(
+    'https://v2.jokeapi.dev/joke/Programming?type=single&amount=10',
+  );
+  logs.add([
+  DateTime.now().toIso8601String(),
+  'Http request',
+  'Calling API through HTTP',
+  ]);
+  final dynamic response = await http.get(url);
+  File jsonfile = File('jsonFile.json');
+  jsonfile.writeAsStringSync(response.body);
+
 }
 
 List<dynamic> getJokesFromJson() {
@@ -48,18 +73,26 @@ List<dynamic> getJokesFromJson() {
   for (int i = 0; i < singularJokes.length; i++) {
     jokevalues.add(singularJokes[i].length);
   }
+  logs.add([
+    DateTime.now().toIso8601String(),
+    'Json Loading',
+    'Loading Joke Json file',
+  ]);
+  
   return jokevalues;
 }
-
 List<dynamic> getDataFromJsonFile() {
   File jsonfile = File('data.json');
-  String raws = jsonfile.readAsStringSync();
-  List<dynamic> uncheckedData = jsonDecode(raws);
-
+  List<dynamic> uncheckedData = jsonDecode(jsonfile.readAsStringSync());
   List<dynamic> temperatures = [];
   for (int i = 0; i < uncheckedData.length; i++) {
     temperatures.add(uncheckedData[i]['temperature']);
   }
+  logs.add([
+    DateTime.now().toIso8601String(),
+    'Json Loading',
+    'Loading Temperatures Json file',
+  ]);
 
   return temperatures;
 }
@@ -98,5 +131,11 @@ num getAverage(List<dynamic> list) {
 
 num getPercent(num average, num extremeNumber) {
   num percent = ((extremeNumber - average).abs() / average) * 100;
+  logs.add([
+    DateTime.now().toIso8601String(),
+    'Calculating',
+    'Calculating average percentage value',
+  ]);
+
   return percent;
 }
